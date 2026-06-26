@@ -107,6 +107,7 @@ function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
 // ── Game logic ────────────────────────────────────────────────────────────────
 function initGame() {
+  aiReset();
   const mx = Math.floor(COLS/2), my = Math.floor(ROWS/2);
   snake      = [{x:mx,y:my},{x:mx-1,y:my},{x:mx-2,y:my}];
   prevSnake  = snake.map(s => ({...s}));
