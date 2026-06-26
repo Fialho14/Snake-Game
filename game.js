@@ -32,9 +32,10 @@ const SPEED_SETTINGS = {
   fast:   { base: 90,  min: 32  },
 };
 let speedKey = 'normal';
+let speedMultiplier = 1;
 function speed(lvl) {
   const {base, min} = SPEED_SETTINGS[speedKey];
-  return Math.max(min, base - (lvl - 1) * 13);
+  return Math.max(10, Math.round(Math.max(min, base - (lvl - 1) * 13) / speedMultiplier));
 }
 
 // ── Sound ─────────────────────────────────────────────────────────────────────
@@ -384,7 +385,21 @@ btnSound.addEventListener('click', () => {
 
 document.querySelectorAll('.seg').forEach(btn => {
   btn.addEventListener('click', () => {
-    speedKey = btn.dataset.s;
+    const newKey = btn.dataset.s;
+
+    if (newKey === 'fast') {
+      if (speedKey === 'fast') {
+        speedMultiplier = speedMultiplier % 3 + 1;
+      } else {
+        speedMultiplier = 1;
+      }
+      btn.textContent = speedMultiplier === 1 ? 'Fast' : `Fast ×${speedMultiplier}`;
+    } else if (speedKey === 'fast') {
+      speedMultiplier = 1;
+      document.querySelector('.seg[data-s="fast"]').textContent = 'Fast';
+    }
+
+    speedKey = newKey;
     document.querySelectorAll('.seg').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     if (running) {

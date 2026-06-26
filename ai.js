@@ -166,7 +166,7 @@ function aiDecide() {
       for (const nb of nbIdxs) {
         if (nb > hIdx && nb > newIdx) {
           if (tIdx > hIdx && nb < tIdx) newIdx = nb;
-        } else newIdx = nb;
+        }
       }
     }
 
